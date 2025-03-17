@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillHive - Courses</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #6c63ff;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            padding: 1rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: white !important;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.85) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem !important;
+            border-radius: 5px;
+            margin: 0 0.2rem;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .card {
+            transition: all 0.3s ease;
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-img-top {
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 0.7rem;
+        }
+
+        .card-text {
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+
+        .filter-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.8rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .form-select, .form-control {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            font-size: 0.95rem;
+        }
+
+        .form-select:focus, .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(78, 84, 200, 0.25);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 84, 200, 0.3);
+        }
+
+        .course-info {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .course-info span {
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .course-info i {
+            margin-right: 0.3rem;
+            color: var(--primary-color);
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        .section-subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            padding: 0.5rem 0.8rem;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+        
+        .badge-beginner {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .badge-intermediate {
+            background-color: #fff8e1;
+            color: #ff8f00;
+        }
+        
+        .badge-advanced {
+            background-color: #fbe9e7;
+            color: #d84315;
+        }
+
+        .course-rating {
+            color: #ffc107;
+            margin-top: 0.8rem;
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .social-icons {
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-3px);
+        }
+
+        .search-form {
+            position: relative;
+        }
+
+        .search-form .btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            height: calc(100% - 10px);
+            border-radius: 8px;
+            padding: 0 1.2rem;
+        }
+
+        .search-form .form-control {
+            padding-right: 4rem;
+            height: 50px;
+            border-radius: 8px;
+        }
+
+        .course-count {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">SkillHive</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="Homepage.html"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-book me-1"></i> Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Profile.html"><i class="fas fa-graduation-cap me-1"></i> My Learning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Profile.html"><i class="fas fa-user-circle me-1"></i> Account</a>
+                    </li>              
+                  </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row mb-4 align-items-center">
+            <div class="col-md-6">
+                <h1 class="section-title">Discover Your Next Skill</h1>
+                <p class="section-subtitle">Explore our wide range of professional courses</p>
+            </div>
+            <div class="col-md-6">
+                <form class="search-form d-flex" role="search" onsubmit="event.preventDefault(); applySearch();">
+                    <input class="form-control" type="search" id="searchInput" placeholder="Search courses..." aria-label="Search">
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="filter-card">
+            <div class="row g-3">
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label fw-bold">Category</label>
+                    <select id="category" class="form-select">
+                        <option value="">All Categories</option>
+                        <option>Web Development</option>
+                        <option>Python</option>
+                        <option>Data Science</option>
+                        <option>Cybersecurity</option>
+                        <option>UI/UX Design</option>
+                        <option>JavaScript</option>
+                        <option>SQL</option>
+                        <option>Java</option>
+                        <option>Digital Marketing</option>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label fw-bold">Price Range</label>
+                    <select id="price" class="form-select">
+                        <option value="">All Prices</option>
+                        <option>Free</option>
+                        <option>Under $50</option>
+                        <option>$50 - $100</option>
+                        <option>$100 - $200</option>
+                        <option>Above $200</option>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label fw-bold">Difficulty Level</label>
+                    <select id="difficulty" class="form-select">
+                        <option value="">All Levels</option>
+                        <option>Beginner</option>
+                        <option>Intermediate</option>
+                        <option>Advanced</option>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="button" class="btn btn-primary w-100" onclick="applyFilters()">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="mb-0">Featured Courses</h3>
+                <p class="text-muted mb-0">Showing <span id="courseCount" class="course-count">12</span> courses</p>
+            </div>
+            <div>
+                <select id="sortBy" class="form-select" onchange="sortCourses()">
+                    <option value="default">Sort by: Featured</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="level">Difficulty Level</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="course-list" class="row">
+            <!-- Sample Course Cards -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="https://futurevisioncomputers.com/wp-content/uploads/2023/09/web-development-course-web-development.jpg" class="card-img-top" alt="Course Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Web Development Bootcamp</h5>
+                        <p class="card-text">Master front-end and back-end development.</p>
+                        <div class="course-info">
+                            <span><i class="fas fa-clock"></i> 40 hrs</span>
+                            <span><i class="fas fa-star course-rating"></i> 4.8</span>
+                            <span class="badge badge-beginner">Beginner</span>
+                            <span class="price" data-price="0">Free</span>
+                        </div>
+                       <a href="CourseDetail.html"><button class="btn btn-primary w-100">Enroll Now</button></a> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=600" class="card-img-top" alt="Complete Web Development Bootcamp">
+                    <div class="card-body">
+                        <h5 class="card-title">Complete Web Development Bootcamp</h5>
+                        <p class="card-text">Learn full-stack web development from scratch.</p>
+                        <div class="course-info">
+                            <span><i class="fas fa-clock"></i> 45 hrs</span>
+                            <span><i class="fas fa-star course-rating"></i> 4.8</span>
+                            <span class="badge badge-beginner">Beginner</span>
+                            <span class="price" data-price="49.99">$49.99</span>
+                        </div>
+                        <a href="CourseDetail.html"><button class="btn btn-primary w-100">Enroll Now</button></a> 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600" class="card-img-top" alt="Data Science Fundamentals">
+                    <div class="card-body">
+                        <h5 class="card-title">Data Science Fundamentals</h5>
+                        <p class="card-text">Master Python, statistics, and machine learning basics.</p>
+                        <div class="course-info">
+                            <span><i class="fas fa-clock"></i> 40 hrs</span>
+                            <span><i class="fas fa-star course-rating"></i> 4.6</span>
+                            <span class="badge badge-intermediate">Intermediate</span>
+                            <span class="price" data-price="99.99">$99.99</span>
+                        </div>
+                        <a href="CourseDetail.html"><button class="btn btn-primary w-100">Enroll Now</button></a> 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=600" class="card-img-top" alt="UI/UX Design Principles">
+                    <div class="card-body">
+                        <h5 class="card-title">UI/UX Design Principles</h5>
+                        <p class="card-text">Create beautiful, user-friendly interfaces.</p>
+                        <div class="course-info">
+                            <span><i class="fas fa-clock"></i> 30 hrs</span>
+                            <span><i class="fas fa-star course-rating"></i> 4.9</span>
+                            <span class="badge badge-beginner">Beginner</span>
+                            <span class="price" data-price="29.99">$29.99</span>
+                        </div>
+                        <a href="CourseDetail.html"><button class="btn btn-primary w-100">Enroll Now</button></a> 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?auto=format&fit=crop&q=80&w=600" class="card-img-top" alt="JavaScript Mastery">
+                    <div class="card-body">
+                        <h5 class="card-title">JavaScript Mastery</h5>
+                        <p class="card-text">Advanced JavaScript concepts and ES6+ features.</p>
+                        <div class="course-info">
+                            <span><i class="fas fa-clock"></i> 50 hrs</span>
+                            <span><i class="fas fa-star course-rating"></i> 4.7</span>
+                            <span class="badge badge-advanced">Advanced</span>
+                            <span class="price" data-price="199.99">$199.99</span>
+                        </div>
+                        <a href="CourseDetail.html"><button class="btn btn-primary w-100">Enroll Now</button></a> 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=600" class="card-img-top" alt="Mobile App Development with React Native">
+                    <div class="card-body">
+                        <h5 class="card-title">Mobile App Development with React Native</h5>
+                        <p class="card-text">Build cross-platform mobile apps.</p>
+                        <div class="course-info">
+                            <span><i class="fas fa-clock"></i> 48 hrs</span>
+                            <span><i class="fas fa-star course-rating"></i> 4.5</span>
+                            <span class="badge badge-intermediate">Intermediate</span>
+                            <span class="price" data-price="149.99">$149.99</span>
+                        </div>
+                        <a href="CourseDetail.html"><button class="btn btn-primary w-100">Enroll Now</button></a> 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&q=80&w=600" class="card-img-top" alt="Machine Learning Fundamentals">
+                    <div class="card-body">
+                        <h5 class="card-title">Machine Learning Fundamentals</h5>
+                        <p class="card-text">Learn AI applications and neural networks.</p>
+                        <div class="course-info">
+                            <span><i class="fas fa-clock"></i> 60 hrs</span>
+                            <span><i class="fas fa-star course-rating"></i> 4.9</span>
+                            <span class="badge badge-intermediate">Intermediate</span>
+                            <span class="price" data-price="199.99">$199.99</span>
+                        </div>
+                        <a href="CourseDetail.html"><button class="btn btn-primary w-100">Enroll Now</button></a> 
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="https://t4.ftcdn.net/jpg/02/65/28/09/360_F_265280966_3F83JFHvgU3b4XclfS0TdI148h4dJuxD.jpg" class="card-img-top" alt="Course Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Python for Data Science</h5>
+                        <p class="card-text">Learn Python with real-world applications.</p>
+                        <div class="course-info">
+                            <span><i class="fas fa-clock"></i> 30 hrs</span>
+                            <span><i class="fas fa-star course-rating"></i> 4.7</span>
+                            <span class="badge badge-intermediate">Intermediate</span>
+                            <span class="price" data-price="99.99">$99.99</span>
+                        </div>
+                        <a href="CourseDetail.html"><button class="btn btn-primary w-100">Enroll Now</button></a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <h4>No courses found.</h4>
+            <p>Try adjusting your search or filter criteria.</p>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 SkillHive. All rights reserved.</p>
+            <ul class="footer-links d-flex justify-content-center mt-2">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function applySearch() {
+            let searchInput = document.getElementById("searchInput").value.toLowerCase();
+            let courses = document.querySelectorAll("#course-list .card");
+            let noResults = document.getElementById("noResults");
+            let found = false;
+
+            courses.forEach(course => {
+                let title = course.querySelector(".card-title").innerText.toLowerCase();
+                if (title.includes(searchInput)) {
+                    course.parentElement.style.display = "block";
+                    found = true;
+                } else {
+                    course.parentElement.style.display = "none";
+                }
+            });
+
+            noResults.style.display = found ? "none" : "block";
+        }
+
+        function applyFilters() {
+            let category = document.getElementById("category").value.toLowerCase();
+            let difficulty = document.getElementById("difficulty").value.toLowerCase();
+            let courses = document.querySelectorAll("#course-list .card");
+            let noResults = document.getElementById("noResults");
+            let found = false;
+
+            courses.forEach(course => {
+                let title = course.querySelector(".card-title").innerText.toLowerCase();
+                let level = course.querySelector(".badge").innerText.toLowerCase();
+                
+                let matchesCategory = category === "" || title.includes(category);
+                let matchesDifficulty = difficulty === "" || level.includes(difficulty);
+                
+                if (matchesCategory && matchesDifficulty) {
+                    course.parentElement.style.display = "block";
+                    found = true;
+                } else {
+                    course.parentElement.style.display = "none";
+                }
+            });
+
+            noResults.style.display = found ? "none" : "block";
+        }
+
+        function sortCourses() {
+            let sortBy = document.getElementById("sortBy").value;
+            let courses = Array.from(document.querySelectorAll("#course-list .col-lg-4"));
+
+            courses.sort((a, b) => {
+                let priceA = parseFloat(a.querySelector(".price").getAttribute("data-price"));
+                let priceB = parseFloat(b.querySelector(".price").getAttribute("data-price"));
+
+                if (sortBy === "price-asc") {
+                    return priceA - priceB;
+                } else if (sortBy === "price-desc") {
+                    return priceB - priceA;
+                } else {
+                    return 0;
+                }
+            });
+
+            let courseList = document.getElementById("course-list");
+            courseList.innerHTML = "";
+            courses.forEach(course => courseList.appendChild(course));
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

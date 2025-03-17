@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - EduPlatform</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="bi bi-mortarboard-fill text-primary me-2 fs-4"></i>
+                <span class="fw-bold text-primary">EduPlatform</span>
+            </a>
+            <div class="d-flex">
+                <a href="Login.html" class="btn btn-link text-decoration-none me-2">Login</a>
+                <a href="#" class="btn btn-primary rounded-pill px-3">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Signup Container -->
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+        <div class="row">
+            <div class="col-12">
+                <!-- Signup Card -->
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Header -->
+                        <div class="text-center mb-4">
+                            <div class="bg-primary text-white d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 60px; height: 60px;">
+                                <i class="bi bi-mortarboard-fill fs-2"></i>
+                            </div>
+                            <h2 class="fw-bold mb-1">Create your account</h2>
+                            <p class="text-muted">Join EduPlatform today and start learning</p>
+                        </div>
+
+                        <!-- Signup Form -->
+                        <form id="signupForm">
+                            <!-- Full Name Input -->
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-person text-muted"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0 bg-light" placeholder="Full Name" required>
+                                </div>
+                            </div>
+
+                            <!-- Email Input -->
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-envelope text-muted"></i>
+                                    </span>
+                                    <input type="email" class="form-control border-start-0 bg-light" placeholder="Email address" required>
+                                </div>
+                            </div>
+
+                            <!-- Password Input -->  
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-lock text-muted"></i>
+                                    </span>
+                                    <input type="password" id="password" class="form-control border-start-0 border-end-0 bg-light" placeholder="Password" required>
+                                    <button class="input-group-text bg-light border-start-0" type="button" id="togglePassword">
+                                        <i class="bi bi-eye text-muted"></i>
+                                    </button>
+                                </div>
+                                <div class="progress mt-2" style="height: 5px;">
+                                    <div id="passwordStrength" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <small class="text-muted mt-1" id="passwordFeedback">Password strength</small>
+                            </div>
+
+                            <!-- Confirm Password Input -->
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-shield-lock text-muted"></i>
+                                    </span>
+                                    <input type="password" id="confirmPassword" class="form-control border-start-0 border-end-0 bg-light" placeholder="Confirm Password" required>
+                                    <button class="input-group-text bg-light border-start-0" type="button" id="toggleConfirmPassword">
+                                        <i class="bi bi-eye text-muted"></i>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback" id="passwordMatch">Passwords do not match</div>
+                            </div>
+
+                            <!-- User Type Selection -->
+                            <div class="mb-4">
+                                <div class="btn-group w-100" role="group">
+                                    <input type="radio" class="btn-check" name="userType" id="studentOption" autocomplete="off" checked>
+                                    <label class="btn btn-outline-primary" for="studentOption">
+                                        <i class="bi bi-mortarboard me-2"></i>Student
+                                    </label>
+                                    
+                                    <input type="radio" class="btn-check" name="userType" id="teacherOption" autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="teacherOption">
+                                        <i class="bi bi-briefcase me-2"></i>Teacher
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Terms Checkbox -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                    <label class="form-check-label text-muted small" for="termsCheck">
+                                        I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Signup Button -->
+                            <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
+                                <span>Create account</span>
+                                <i class="bi bi-arrow-right ms-2"></i>
+                            </button>
+
+                            <!-- Divider -->
+                            <div class="position-relative my-4">
+                                <hr>
+                                <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small">or</span>
+                            </div>
+
+                            <!-- Social Signup -->
+                            <div class="d-grid gap-2 mb-3">
+                                <button type="button" class="btn btn-outline-secondary py-2">
+                                    <i class="bi bi-google me-2"></i>
+                                    <span>Continue with Google</span>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary py-2">
+                                    <i class="bi bi-microsoft me-2"></i>
+                                    <span>Continue with Microsoft</span>
+                                </button>
+                            </div>
+
+                            <!-- Login Link -->
+                            <p class="text-center text-muted small mb-0">
+                                Already have an account? <a href="Login.html" class="text-decoration-none">Log in</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                Account created successfully!
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Password toggle
+            const togglePassword = document.getElementById('togglePassword');
+            const password = document.getElementById('password');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                togglePassword.querySelector('i').classList.toggle('bi-eye');
+                togglePassword.querySelector('i').classList.toggle('bi-eye-slash');
+            });
+            
+            // Confirm password toggle
+            const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+            const confirmPassword = document.getElementById('confirmPassword');
+            
+            toggleConfirmPassword.addEventListener('click', function() {
+                const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmPassword.setAttribute('type', type);
+                toggleConfirmPassword.querySelector('i').classList.toggle('bi-eye');
+                toggleConfirmPassword.querySelector('i').classList.toggle('bi-eye-slash');
+            });
+            
+            // Password strength indicator
+            const passwordStrength = document.getElementById('passwordStrength');
+            const passwordFeedback = document.getElementById('passwordFeedback');
+            
+            password.addEventListener('input', function() {
+                const value = password.value;
+                let strength = 0;
+                
+                if (value.length >= 8) strength += 1;
+                if (/[A-Z]/.test(value)) strength += 1;
+                if (/[0-9]/.test(value)) strength += 1;
+                if (/[^A-Za-z0-9]/.test(value)) strength += 1;
+                
+                // Update progress bar
+                passwordStrength.style.width = (strength * 25) + '%';
+                
+                // Update color
+                if (strength === 0) {
+                    passwordStrength.className = 'progress-bar';
+                    passwordFeedback.textContent = 'Password strength';
+                } else if (strength <= 2) {
+                    passwordStrength.className = 'progress-bar bg-danger';
+                    passwordFeedback.textContent = 'Weak password';
+                } else if (strength === 3) {
+                    passwordStrength.className = 'progress-bar bg-warning';
+                    passwordFeedback.textContent = 'Medium password';
+                } else {
+                    passwordStrength.className = 'progress-bar bg-success';
+                    passwordFeedback.textContent = 'Strong password';
+                }
+            });
+            
+            // Password match validation
+            confirmPassword.addEventListener('input', function() {
+                if (password.value !== confirmPassword.value) {
+                    confirmPassword.classList.add('is-invalid');
+                    document.getElementById('passwordMatch').style.display = 'block';
+                } else {
+                    confirmPassword.classList.remove('is-invalid');
+                    document.getElementById('passwordMatch').style.display = 'none';
+                }
+            });
+            
+            // Form submission
+            const toast = new bootstrap.Toast(document.getElementById('notificationToast'));
+            const toastMessage = document.getElementById('toastMessage');
+            
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate passwords match
+                if (password.value !== confirmPassword.value) {
+                    confirmPassword.classList.add('is-invalid');
+                    document.getElementById('passwordMatch').style.display = 'block';
+                    return;
+                }
+                
+                // Display success message
+                toastMessage.textContent = "Account created successfully!";
+                document.querySelector('.toast-header i').className = 'bi bi-check-circle-fill text-success me-2';
+                toast.show();
+                window.location.href = `/D:/VScode/WebLab/Project_Elearning_site/CourseList.html`;
+                // Here you would typically handle user registration
+                // and redirect after successful signup
+            });
+        });
+    </script>
+
+    <style>
+        /* Custom styles to enhance Bootstrap */
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        .card {
+            max-width: 450px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .form-control:focus, .input-group-text:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        /* Update navbar positioning */
+        .min-vh-100 {
+            margin-top: 30px;
+        }
+        
+        /* Button effects */
+        .btn-primary {
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
+        }
+        
+        /* Input group focus management */
+        .input-group:focus-within {
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+            border-radius: 0.375rem;
+        }
+        
+        .input-group:focus-within .input-group-text,
+        .input-group:focus-within .form-control {
+            border-color: #86b7fe;
+            box-shadow: none;
+        }
+        
+        /* Custom radio button styling */
+        .btn-outline-primary {
+            border-color: #dee2e6;
+            color: #6c757d;
+        }
+        
+        .btn-check:checked + .btn-outline-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+        
+        /* Custom checkbox styling */
+        .form-check-input:checked {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        
+        /* Invalid feedback styling */
+        .invalid-feedback {
+            display: none;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+            .card-body {
+                padding: 2rem !important;
+            }
+        }
+    </style>
+</body>
+</html>

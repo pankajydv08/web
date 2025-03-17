@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillHive Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="bi bi-mortarboard-fill text-primary me-2 fs-4"></i>
+                <span class="fw-bold text-primary">SkillHive</span>
+            </a>
+            <div class="d-flex">
+                <a href="#" class="btn btn-link text-decoration-none me-2">Login</a>
+                <a href="signup.html" class="btn btn-primary rounded-pill px-3">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+        <div class="row">
+            <div class="col-12">
+                <!-- Login Card -->
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Header -->
+                        <div class="text-center mb-4">
+                            <div class="bg-primary text-white d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 60px; height: 60px;">
+                                <i class="bi bi-mortarboard-fill fs-2"></i>
+                            </div>
+                            <h2 class="fw-bold mb-1">Welcome back!</h2>
+                            <p class="text-muted">Log in to continue your learning journey</p>
+                        </div>
+
+                        <!-- Login Form -->
+                        <form id="loginForm" action="/CourseList.html">
+                            <!-- Email Input -->
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-envelope text-muted"></i>
+                                    </span>
+                                    <input type="email" class="form-control border-start-0 bg-light" placeholder="Email address" required>
+                                </div>
+                            </div>
+
+                            <!-- Password Input -->  
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-lock text-muted"></i>
+                                    </span>
+                                    <input type="password" id="password" class="form-control border-start-0 border-end-0 bg-light" placeholder="Password" required>
+                                    <button class="input-group-text bg-light border-start-0" type="button" id="togglePassword">
+                                        <i class="bi bi-eye text-muted"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Options -->
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label text-muted small" for="rememberMe">
+                                        Remember me
+                                    </label>
+                                </div>
+                                <a href="#" class="text-decoration-none small">Forgot password?</a>
+                            </div>
+
+                            <!-- Login Button -->
+                            <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
+                                <span>Log in as Student</span>
+                                <i class="bi bi-arrow-right ms-2"></i>
+                            </button>
+                            <a href="Admin.html">
+                                <button class="btn btn-primary w-100 py-2 mb-3">
+                                    <span>Log in as Teacher</span>
+                                    <i class="bi bi-arrow-right ms-2"></i>
+                                </button>
+                            </a>
+                            
+
+                            <!-- Divider -->
+                            <div class="position-relative my-4">
+                                <hr>
+                                <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small">or</span>
+                            </div>
+
+                            <!-- Social Logins -->
+                            <div class="d-grid gap-2 mb-3">
+                                <button type="button" class="btn btn-outline-secondary py-2">
+                                    <i class="bi bi-google me-2"></i>
+                                    <span>Continue with Google</span>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary py-2">
+                                    
+                                    <span>Continue with Microsoft</span>
+                                </button>
+                            </div>
+
+                            <!-- Sign Up Text -->
+                            <p class="text-center text-muted small mb-0">
+                                Don't have an account? <a href="signup.html" class="text-decoration-none">Sign up</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                Login successful!
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Password toggle
+            const togglePassword = document.getElementById('togglePassword');
+            const password = document.getElementById('password');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                togglePassword.querySelector('i').classList.toggle('bi-eye');
+                togglePassword.querySelector('i').classList.toggle('bi-eye-slash');
+            });
+            
+            // Form submission
+            const toast = new bootstrap.Toast(document.getElementById('notificationToast'));
+            const toastMessage = document.getElementById('toastMessage');
+            
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                toastMessage.textContent = "Login successful!";
+                document.querySelector('.toast-header i').className = 'bi bi-check-circle-fill text-success me-2';
+                toast.show();
+                window.location.href = `/D:/VScode/WebLab/Project_Elearning_site/CourseList.html`;
+                // Here you would typically handle authentication
+                // and redirect after successful login
+            });
+        });
+    </script>
+
+    <style>
+        /* Custom styles to enhance Bootstrap */
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        .card {
+            max-width: 420px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .form-control:focus, .input-group-text:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        /* Update navbar positioning */
+        .min-vh-100 {
+            margin-top: 30px;
+        }
+        
+        /* Button effects */
+        .btn-primary {
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
+        }
+        
+        /* Input group focus management */
+        .input-group:focus-within {
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+            border-radius: 0.375rem;
+        }
+        
+        .input-group:focus-within .input-group-text,
+        .input-group:focus-within .form-control {
+            border-color: #86b7fe;
+            box-shadow: none;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+            .card-body {
+                padding: 2rem !important;
+            }
+        }
+    </style>
+</body>
+</html>

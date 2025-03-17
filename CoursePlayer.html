@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Player</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #0056b3;
+            --dark-bg: #1a1d21;
+            --dark-card: #252930;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px 15px 0 0;
+            padding: 1.5rem;
+        }
+
+        .sidebar-card .card-body {
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .btn {
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .lesson-button {
+            background: none;
+            border: none;
+            text-align: left;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .lesson-button:hover {
+            background-color: #f0f4f8;
+            color: var(--primary-color);
+        }
+
+        .lesson-button.active {
+            background-color: #e7f0fe;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .video-container {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Discussion */
+        .message-bubble {
+            background-color: #f0f4f8;
+            border-radius: 15px;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .message-bubble:hover {
+            background-color: #e7ecef;
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background-color: var(--dark-bg);
+            color: #e9ecef;
+        }
+
+        .dark-mode .card {
+            background-color: var(--dark-card);
+        }
+
+        .dark-mode .sidebar-card .card-body {
+            background-color: var(--dark-card);
+        }
+
+        .dark-mode .lesson-button:hover {
+            background-color: #2d3239;
+        }
+
+        .dark-mode .lesson-button.active {
+            background-color: #374151;
+        }
+
+        .dark-mode .message-bubble {
+            background-color: #2d3239;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        .sidebar-card {
+            animation: slideIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <a class="navbar-brand" href="#">SkillHive</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-search"></i> Search</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-md-3" id="sidebar">
+                <div class="card sidebar-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Course Curriculum</h5>
+                        <button class="btn btn-sm btn-outline-light" id="toggleSidebar"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="card-body" id="courseContent"></div>
+                </div>
+            </div>
+
+            <div class="col-md-9" id="mainContent">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0" id="lessonTitle">Lesson Title</h5>
+                        <button class="btn btn-sm btn-outline-light" id="toggleDarkMode"><i class="fas fa-moon"></i> Dark Mode</button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="video-container embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" id="lessonVideo" src="" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mb-4">
+                    <button class="btn btn-primary" id="prevLesson"><i class="fas fa-chevron-left"></i> Previous</button>
+                    <button class="btn btn-primary" id="nextLesson">Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <i class="fas fa-comments mr-2"></i>
+                        <h5 class="mb-0">Discussion</h5>
+                    </div>
+                    <div class="card-body" id="discussion"></div>
+                    <div class="card-footer bg-transparent">
+                        <form id="messageForm">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="messageInput" placeholder="Type your message...">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" id="showSidebar" style="display: none; position: fixed; bottom: 20px; right: 20px;"><i class="fas fa-bars"></i> Show Course Section</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const courseData = {
+                curriculum: [
+                    {
+                        title: 'Getting Started',
+                        lessons: [
+                            { id: 'l1', title: 'Course Introduction', duration: '5:30', videoUrl: 'https://www.youtube.com/embed/w7ejDZ8SWv8?autoplay=0' },
+                            { id: 'l2', title: 'Setting Up Your Development Environment', duration: '15:45', videoUrl: 'https://www.youtube.com/embed/SqcY0GlETPk?autoplay=0' },
+                        ],
+                    },
+                    {
+                        title: 'Frontend Development',
+                        lessons: [
+                            { id: 'l3', title: 'HTML5 Fundamentals', duration: '20:15', videoUrl: 'https://www.youtube.com/embed/UB1O30fR-EE?autoplay=0' },
+                            { id: 'l4', title: 'CSS3 and Responsive Design', duration: '25:30', videoUrl: 'https://www.youtube.com/embed/yfoY53QXEnI?autoplay=0' },
+                        ],
+                    },
+                ],
+            };
+
+            let currentLessonIndex = 0;
+            const allLessons = courseData.curriculum.flatMap(section => section.lessons);
+            const elements = {
+                lessonTitle: document.getElementById('lessonTitle'),
+                lessonVideo: document.getElementById('lessonVideo'),
+                prevLesson: document.getElementById('prevLesson'),
+                nextLesson: document.getElementById('nextLesson'),
+                toggleSidebar: document.getElementById('toggleSidebar'),
+                sidebar: document.getElementById('sidebar'),
+                mainContent: document.getElementById('mainContent'),
+                toggleDarkMode: document.getElementById('toggleDarkMode'),
+                discussion: document.getElementById('discussion'),
+                messageForm: document.getElementById('messageForm'),
+                messageInput: document.getElementById('messageInput'),
+                courseContent: document.getElementById('courseContent'),
+                showSidebar: document.getElementById('showSidebar')
+            };
+
+            function loadLesson(index) {
+                const lesson = allLessons[index];
+                elements.lessonTitle.textContent = lesson.title;
+                elements.lessonVideo.src = lesson.videoUrl;
+                elements.prevLesson.disabled = index === 0;
+                elements.nextLesson.disabled = index === allLessons.length - 1;
+                
+                // Update active lesson in sidebar
+                document.querySelectorAll('.lesson-button').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.index == index);
+                });
+            }
+
+            // Event Listeners
+            elements.prevLesson.addEventListener('click', () => {
+                if (currentLessonIndex > 0) {
+                    currentLessonIndex--;
+                    loadLesson(currentLessonIndex);
+                }
+            });
+
+            elements.nextLesson.addEventListener('click', () => {
+                if (currentLessonIndex < allLessons.length - 1) {
+                    currentLessonIndex++;
+                    loadLesson(currentLessonIndex);
+                }
+            });
+
+            elements.toggleSidebar.addEventListener('click', () => {
+                elements.sidebar.classList.toggle('d-none');
+                elements.mainContent.classList.toggle('col-md-12');
+                elements.mainContent.classList.toggle('col-md-9');
+                elements.showSidebar.style.display = elements.sidebar.classList.contains('d-none') ? 'block' : 'none';
+            });
+
+            elements.showSidebar.addEventListener('click', () => {
+                elements.sidebar.classList.remove('d-none');
+                elements.mainContent.classList.remove('col-md-12');
+                elements.mainContent.classList.add('col-md-9');
+                elements.showSidebar.style.display = 'none';
+            });
+
+            elements.toggleDarkMode.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+
+            elements.messageForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const messageText = elements.messageInput.value.trim();
+                if (messageText) {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message-bubble');
+                    messageDiv.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="font-weight-bold">You</span>
+                            <small class="text-muted">${new Date().toLocaleTimeString()}</small>
+                        </div>
+                        <p class="mb-0">${messageText}</p>
+                    `;
+                    elements.discussion.appendChild(messageDiv);
+                    elements.discussion.scrollTop = elements.discussion.scrollHeight;
+                    elements.messageInput.value = '';
+                }
+            });
+
+            // Populate course content
+            courseData.curriculum.forEach((section, sectionIndex) => {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.classList.add('mb-4');
+
+                const sectionTitle = document.createElement('h6');
+                sectionTitle.classList.add('text-uppercase', 'font-weight-bold', 'mb-3');
+                sectionTitle.textContent = section.title;
+                sectionDiv.appendChild(sectionTitle);
+
+                section.lessons.forEach((lesson, lessonIndex) => {
+                    const globalIndex = sectionIndex * section.lessons.length + lessonIndex;
+                    const lessonButton = document.createElement('button');
+                    lessonButton.classList.add('lesson-button');
+                    lessonButton.dataset.index = globalIndex;
+                    lessonButton.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>${lesson.title}</span>
+                            <small class="text-muted">${lesson.duration}</small>
+                        </div>
+                    `;
+                    lessonButton.addEventListener('click', () => {
+                        currentLessonIndex = globalIndex;
+                        loadLesson(currentLessonIndex);
+                    });
+                    sectionDiv.appendChild(lessonButton);
+                });
+
+                elements.courseContent.appendChild(sectionDiv);
+            });
+
+            // Initial setup
+            loadLesson(currentLessonIndex);
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+        });
+    </script>
+</body>
+</html>

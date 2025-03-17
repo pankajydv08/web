@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillHive - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .sidebar a:hover {
+            background: #34495e;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #34495e;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #f8f9fa;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            margin-right: 5px;
+            font-size: 12px;
+        }
+
+        .edit-btn {
+            background: #3498db;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>SkillHive Admin</h2>
+            <a href="#add-course" onclick="showSection('add-course')">Add Course</a>
+            <a href="#view-courses" onclick="showSection('view-courses')">View Courses</a>
+            <a href="#students" onclick="showSection('students')">Students</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Add Course Section -->
+            <div id="add-course" class="card section">
+                <h2>Add New Course</h2>
+                <form id="course-form">
+                    <div class="form-group">
+                        <label for="title">Course Title</label>
+                        <input type="text" id="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="instructor">Instructor Name</label>
+                        <input type="text" id="instructor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" required>
+                            <option value="">Select Category</option>
+                            <option value="programming">Programming</option>
+                            <option value="design">Design</option>
+                            <option value="business">Business</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Course Content</label>
+                        <input type="file" id="content" accept=".pdf,.mp4" multiple>
+                    </div>
+                    <button type="submit">Add Course</button>
+                </form>
+            </div>
+
+            <!-- View Courses Section -->
+            <div id="view-courses" class="card section" style="display: none;">
+                <h2>All Courses</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Instructor</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courses-table">
+                        <!-- Courses will be added here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Students Section -->
+            <div id="students" class="card section" style="display: none;">
+                <h2>Total Students</h2>
+                <div id="student-count">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Basic JavaScript functionality
+        let courses = [];
+        let studentCount = 0;
+
+        // Show/hide sections
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        // Handle form submission
+        document.getElementById('course-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const course = {
+                id: Date.now(),
+                title: document.getElementById('title').value,
+                instructor: document.getElementById('instructor').value,
+                status: 'Draft'
+            };
+            courses.push(course);
+            updateCoursesTable();
+            this.reset();
+        });
+
+        // Update courses table
+        function updateCoursesTable() {
+            const tbody = document.getElementById('courses-table');
+            tbody.innerHTML = '';
+            courses.forEach(course => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${course.title}</td>
+                    <td>${course.instructor}</td>
+                    <td>${course.status}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editCourse(${course.id})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteCourse(${course.id})">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Edit course (basic implementation)
+        function editCourse(id) {
+            const course = courses.find(c => c.id === id);
+            if (course) {
+                alert(`Editing course: ${course.title}`);
+                // Add your edit logic here
+            }
+        }
+
+        // Delete course
+        function deleteCourse(id) {
+            courses = courses.filter(c => c.id !== id);
+            updateCoursesTable();
+        }
+
+        // Update student count (dummy data)
+        function updateStudentCount() {
+            studentCount = Math.floor(Math.random() * 1000); // Random number for demo
+            document.getElementById('student-count').textContent = `${studentCount} Students Enrolled`;
+        }
+
+        // Initial setup
+        showSection('add-course');
+        updateStudentCount();
+    </script>
+</body>
+</html>
